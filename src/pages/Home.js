@@ -24,7 +24,7 @@ const Home = () => {
   }, [searchQuery, allContentData]);
   //
   useEffect(() => {
-    dispatch(getContent());
+    // dispatch(getContent());
   }, []);
   //
   return (

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   bookmarkContent,
   updateTrending,
-  updateContent,
   updateMovies,
   updateTvSeries,
 } from "../features/content/contentSlice";
@@ -42,7 +41,6 @@ const ContentItem = ({
             dispatch(updateMovies(id));
             dispatch(updateTvSeries(id));
             dispatch(updateTrending(id));
-            dispatch(updateContent(id));
           }}
         >
           {isBookmarked ? (

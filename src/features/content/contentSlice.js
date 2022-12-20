@@ -13,72 +13,21 @@ const initialState = {
   isLoading: false,
 };
 
-// const getData = async () => {
-//   const res = await axios.get("http://localhost:3006/content");
-//   console.log(res.data);
-// };
-// getData()
-
 export const getContent = createAsyncThunk("content/getContent", async () => {
   try {
     const res = await axios.get("http://localhost:3006/content");
-    // console.log(res.data);
     return res.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return error;
   }
 });
-
-export const updateContent = createAsyncThunk(
-  "content/updateContent",
-  async (id, { getState }) => {
-    try {
-      const { allContentData } = getState().content;
-      // console.log(allContentData)
-      // console.log(id)
-      // const newData = allContentData.map(item => item.id === id ? {...item, isBookmarked: !item.isBookmarked} : item)
-      const newItem = allContentData.filter((item) => item.id === id);
-      const newcontent = await axios.patch(
-        `http://localhost:3006/content/${id}`,
-        { isBookmarked: newItem[0].isBookmarked }
-      );
-      return newcontent.data;
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-);
-
-export const getMovies = createAsyncThunk("content/getMovies", async () => {
-  try {
-    const res = await axios.get("http://localhost:3006/content?category=Movie");
-    return res.data;
-  } catch (error) {
-    return error;
-  }
-});
-
-export const getTV = createAsyncThunk("content/getTV", async () => {
-  try {
-    const res = await axios.get(
-      "http://localhost:3006/content?category=TV+Series"
-    );
-    return res.data;
-  } catch (error) {
-    return error;
-  }
-});
-
-// getContent()
 
 const contentSlice = createSlice({
   name: "content",
   initialState,
   reducers: {
     bookmarkContent: (state, { payload }) => {
-      console.log(payload);
       const markedItem = state.allContentData.find(
         (item) => item.id === payload
       );
@@ -94,7 +43,6 @@ const contentSlice = createSlice({
       }
     },
     updateTrending: (state, { payload }) => {
-      console.log(payload)
       const markedItem = state.trendingContent.find(
         (item) => item.id === payload
       );
@@ -104,14 +52,12 @@ const contentSlice = createSlice({
       // state.trendingContent = [state.trendingContent, markedItem]
     },
     updateTvSeries: (state, { payload }) => {
-      console.log(payload)
       const markedItem = state.tvSeriesData.find((item) => item.id === payload);
       if (markedItem) {
         markedItem.isBookmarked = !markedItem.isBookmarked;
       }
     },
     updateMovies: (state, { payload }) => {
-      console.log(payload)
       const markedItem = state.moviesData.find((item) => item.id === payload);
       if (markedItem) {
         markedItem.isBookmarked = !markedItem.isBookmarked;
@@ -123,66 +69,44 @@ const contentSlice = createSlice({
       );
       state.bookmarkedContent = markedItems;
     },
-    searchQuery: (state, {payload}) => {
-      const {query} = payload
-      state.searchQueryAndLocation = payload
-      state.searchQuery = query
-    }
+    searchQuery: (state, { payload }) => {
+      const { query } = payload;
+      state.searchQueryAndLocation = payload;
+      state.searchQuery = query;
+    },
   },
   extraReducers: (builder) => {
     // GET ALL DATA
     builder.addCase(getContent.fulfilled, (state, { payload }) => {
-      state.allContentData = payload;
-      const trendingData = payload.filter((item) => item.isTrending);
-      state.trendingContent = trendingData;
+      if (state.allContentData.length <= 0) {
+        state.allContentData = payload;
+        const trendingData = payload.filter((item) => item.isTrending);
+        state.trendingContent = trendingData;
+        const movies = payload.filter((item) => item.category === "Movie");
+        const tv = payload.filter((item) => item.category === "TV Series");
+        state.moviesData = movies;
+        state.tvSeriesData = tv;
+        state.isLoading = false;
+      }
       state.isLoading = false;
     });
     builder.addCase(getContent.rejected, (state, { payload }) => {
-      console.log(payload);
       state.isLoading = false;
     });
     builder.addCase(getContent.pending, (state, { payload }) => {
       state.isLoading = true;
     });
-    // GET MOVIE DATA
-    builder.addCase(getMovies.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.moviesData = payload;
-    });
-    builder.addCase(getMovies.pending, (state, { payload }) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getMovies.rejected, (state, { payload }) => {
-      state.isLoading = false;
-      console.log(payload);
-    });
-    // GET TV DATA
-    builder.addCase(getTV.fulfilled, (state, { payload }) => {
-      state.isLoading = false;
-      state.tvSeriesData = payload;
-    });
-    builder.addCase(getTV.pending, (state, { payload }) => {
-      state.isLoading = true;
-    });
-    builder.addCase(getTV.rejected, (state, { payload }) => {
-      state.isLoading = false;
-      console.log(payload);
-    });
-    // UPDATE CONTENT
-    builder.addCase(updateContent.fulfilled, (state, { payload }) => {
-      console.log(payload);
-      // const newData = state.allContentData.find(item => item.id === payload.id)
-      // newData.isBookmarked = payload.isBookmarked
-    });
-    builder.addCase(updateContent.rejected, (state, { payload }) => {
-      console.log(payload);
-    });
-    builder.addCase(updateContent.pending, (state, { payload }) => {});
   },
 });
 
 // FOR WHEN WE HAVE ACTIONS
-export const { bookmarkContent, updateTrending, updateMovies, updateTvSeries, renderCurrentBookmarks, searchQuery } =
-  contentSlice.actions;
+export const {
+  bookmarkContent,
+  updateTrending,
+  updateMovies,
+  updateTvSeries,
+  renderCurrentBookmarks,
+  searchQuery,
+} = contentSlice.actions;
 
 export default contentSlice.reducer;

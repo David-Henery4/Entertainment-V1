@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTV } from "../features/content/contentSlice";
 import { Content, LoadingSpinner } from "../components";
 import handleSearch from "../search/searchFunction";
 
@@ -18,9 +17,6 @@ const TvSeries = () => {
     setSearchQueryArray(queriedItems)
   },[searchQuery, tvSeriesData])
   //
-  useEffect(() => {
-    dispatch(getTV());
-  }, []);
   return (
     <>
       {isLoading ? (
