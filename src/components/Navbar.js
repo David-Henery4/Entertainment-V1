@@ -20,10 +20,16 @@ const Navbar = () => {
         {navigationData.map(navItem => {
           const { id, name, path} = navItem
           return (
-            <NavLink key={id} to={path} aria-label={name} className={({isActive}) => navLinksStyles(isActive)}>
-              <navItem.icon/>
-            </NavLink>
-          )
+            <li key={id}>
+              <NavLink
+                to={path}
+                aria-label={name}
+                className={({ isActive }) => navLinksStyles(isActive)}
+              >
+                <navItem.icon />
+              </NavLink>
+            </li>
+          );
         })}
         </ul>
       </div>
