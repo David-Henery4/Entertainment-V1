@@ -1,4 +1,4 @@
-# Frontend Mentor - Entertainment web app solution
+# Entertainment web
 
 This is a solution to the [Entertainment web app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/entertainment-web-app-J-UhgAW1X). Frontend Mentor challenges help you improve your coding skills by building realistic project.
 
@@ -14,9 +14,6 @@ This is a solution to the [Entertainment web app challenge on Frontend Mentor](h
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -29,22 +26,14 @@ Users should be able to:
 - Navigate between Home, Movies, TV Series, and Bookmarked Shows pages
 - Add/Remove bookmarks from all movies and TV series
 - Search for relevant shows on all pages
-- **Bonus**: Build this project as a full-stack application
-- **Bonus**: If you're building a full-stack app, we provide authentication screen (sign-up/login) designs if you'd like to create an auth flow
 
-### Screenshot
+### Desktop Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![desktop-screenshot](./screenshot/desktop-screenshot.png)
 
 ### Links
+
+LINKS TO BE ADDED!
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Add live site URL here](https://your-live-site-url.com)
@@ -54,63 +43,66 @@ Then crop/optimize/edit your image however you like, add it to your project, and
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
+- [SASS/SCSS](https://sass-lang.com) - CSS preprocessor / CSS extension
+- [Tailwind CSS](https://tailwindcss.com) - CSS Utility class library
 - [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+- [React Redux-Toolkit](https://redux-toolkit.js.org) - State management library
+- [React-Router-6](https://reactrouter.com/en/main) - library for routing & navigation
+- [Redux-persist](https://github.com/rt2zz/redux-persist) - Saves and hydrates the state to local storage
+- [Axios](https://axios-http.com) - http based promise library to help interact with APIs
+- [Json-server](https://github.com/typicode/json-server) - Mock API server and database to get APIs from
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+There were a few things I learned when building this project. One was planning, I had always planned the styles and layout of my projects before starting a project abd this has enabled me to build the UI of the projects much quicker. Although, in this project was the first time I had applied the same concept to the features, logic and flow of the project. I found this had the same outcome and enabled me to build the project alot faster and more effeciently.
 
-To see how you can add code snippets, see below:
+Another takeaway from this project for me was getting more comfortable with the grid, little things like the difference between "auto-fill" & "auto-fit" when creating responsive grids. For example, auto-fill will allow another columns to be added to the end, when there is enough space but won't stretch the content, where as auto-fit will stretch the content to cover the space, untill there is enough room for another column.
 
-```html
-<h1>Some HTML code I'm proud of</h1>
+Although the main things I have learned from this project was using "Json-server" to set up a mock backend server, on the localhost, and creating a database and API I could interact with. I would then use this API to fetch the data that I needed for the project. I also used this and "Json-server-auth" to create a auth signup/login functionality for the user, using different API calls like patch and post, while also using a json web token to authorize the user when changing specific data like a users bookmarks. 
+
+I used this in combination with creating private routes in react-router and only directing the user from the login/signup page, to the dashboard after the user has been authenticated.
+
+Although because I had used a mock backend with json-server & json-server-auth I wasn't able to deploy this project as it needed a external server to host the database and API while also allowing authentication, I was able to find one alternative but this only worked with hosting the Database and API but not the authentication which is why this version has no signup/login functionality at the moment.
+
+
+
+While developing I had to set up a local server and make calls to grab the data from it.
+
+### This was the cmd to set up the local mock server.
+```json 
+"start-server": "json-server -p 3006 -w ./src/database/db.json",
 ```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
+
+### This is the API call to the local server.
 ```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
+export const getContent = createAsyncThunk("content/getContent", async () => {
+  try {
+    const res = await axios.get("http://localhost:3006/content");
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+});
 ```
-
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+Using a mock backend on this project has definitely sparked my interest about learning more about the backend and creating APIs and how to create things like authentication and interacting with a database & server. I will be learning more about this in the near future so I can start building full stack applications. Once I learn more about it, I will return to this project and finally implement the authentication and the signup/login features for the project.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [ikramdeveloper repo on deploying Json-server](https://github.com/ikramdeveloper/json-server-deploy) - I found this when searching for how to deploy json-server on stackoverflow and found it to be very helpfull, I used the glitch solution.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
+- Website - [David Henery](https://www.djhwebdevelopment.com)
+- Frontend Mentor - [@David-Henery4](https://www.frontendmentor.io/profile/David-Henery4)
+- linkedIn - [David Henery](https://www.linkedin.com/in/david-henery-725458241)
 
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
 
-## Acknowledgments
 
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**

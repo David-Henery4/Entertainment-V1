@@ -15,7 +15,9 @@ const initialState = {
 
 export const getContent = createAsyncThunk("content/getContent", async () => {
   try {
-    const res = await axios.get("http://localhost:3006/content");
+    const res = await axios.get(
+      "https://hill-spot-philodendron.glitch.me/content"
+    );
     return res.data;
   } catch (error) {
     console.error(error);
