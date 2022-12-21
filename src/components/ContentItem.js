@@ -51,11 +51,14 @@ const ContentItem = ({
         </div>
         <picture>
           <source
-            srcSet={regular && require(`../assets/thumbnails/${regular.medium}`)}
+            srcSet={
+              regular && require(`../assets/thumbnails/${regular.medium}`)
+            }
             media="(min-width:45.62em)"
           />
           <img
             className="w-full rounded-lg"
+            src={regular && require(`../assets/thumbnails/${regular.small}`)}
             srcSet={regular && require(`../assets/thumbnails/${regular.small}`)}
             alt="thumbnail"
           />

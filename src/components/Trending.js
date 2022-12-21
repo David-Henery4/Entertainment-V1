@@ -10,7 +10,7 @@ import {
   BookmarkIconEmpty,
   BookmarkIconFull,
   movieIcon,
-  playIcon
+  playIcon,
 } from "../assets";
 
 const Trending = ({ trendingData }) => {
@@ -60,6 +60,10 @@ const Trending = ({ trendingData }) => {
                 />
                 <img
                   className="absolute top-0 left-0 -z-0 w-full h-full"
+                  src={
+                    thumbnail.trending &&
+                    require(`../assets/thumbnails/${thumbnail.trending.small}`)
+                  }
                   srcSet={
                     thumbnail.trending &&
                     require(`../assets/thumbnails/${thumbnail.trending.small}`)
