@@ -11,6 +11,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const {
     allContentData,
+    recommendedData,
     trendingContent,
     isLoading,
     searchQueryAndLocation,
@@ -18,9 +19,9 @@ const Home = () => {
   } = useSelector((store) => store.content);
   //
   useEffect(() => {
-    const queriedItems = handleSearch(searchQuery,allContentData)
-    setQueryLength(searchQuery.length)
-    setSearchQueryArray(queriedItems)
+    const queriedItems = handleSearch(searchQuery, allContentData);
+    setQueryLength(searchQuery.length);
+    setSearchQueryArray(queriedItems);
   }, [searchQuery, allContentData]);
   //
   useEffect(() => {
@@ -33,19 +34,24 @@ const Home = () => {
         <LoadingSpinner />
       ) : (
         <>
-        {queryLength <= 0 ? (<>
-          <Trending trendingData={trendingContent} />
-          <Content
-            name={"Recommended for you"}
-            contentData={allContentData}
-          />
-        </>) : (
-          <>
-          <Content
-            name={`Found ${searchQueryArray.length} results for "${searchQueryAndLocation.query}"`}
-            contentData={searchQueryArray}
-          />
-        </>)}
+          {queryLength <= 0 ? (
+            <>
+              <Trending trendingData={trendingContent} />
+              <Content
+                name={"Recommended for you"}
+                contentData={recommendedData}
+              />
+            </>
+          ) : (
+            <>
+              <Content
+                name={`Found ${searchQueryArray.length} result${
+                  searchQueryArray.length === 1 ? "" : "s"
+                } for "${searchQueryAndLocation.query}"`}
+                contentData={searchQueryArray}
+              />
+            </>
+          )}
         </>
       )}
     </>

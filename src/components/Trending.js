@@ -18,7 +18,7 @@ const Trending = ({ trendingData }) => {
   return (
     <section
       className="col-start-2 col-end-13 grid gap-4 smTab:gap-7 overflow-x-auto style-scroll pb-2"
-      tabindex="0"
+      tabIndex="0"
     >
       <h1 className="text-xl font-light smTab:text-subheadingTab">Trending</h1>
       <div className="flex justify-start items-center gap-4 smTab:gap-10">

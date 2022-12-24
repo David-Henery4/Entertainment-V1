@@ -26,7 +26,9 @@ const Movies = () => {
             <Content name={"Movies"} contentData={moviesData} />
           ) : (
             <Content
-              name={`Found ${searchQueryArray.length} results for "${searchQueryAndLocation.query}"`}
+              name={`Found ${searchQueryArray.length} result${
+                searchQueryArray.length === 1 ? "" : "s"
+              } for "${searchQueryAndLocation.query}"`}
               contentData={searchQueryArray}
             />
           )}

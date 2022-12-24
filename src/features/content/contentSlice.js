@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialState = {
   allContentData: [],
+  recommendedData: [],
   moviesData: [],
   tvSeriesData: [],
   bookmarkedContent: [],
@@ -44,6 +45,14 @@ const contentSlice = createSlice({
         state.bookmarkedContent = newBookmarks;
       }
     },
+    updateRecommended: (state, { payload }) => {
+      const markedItem = state.recommendedData.find(
+        (item) => item.id === payload
+      );
+      if (markedItem) {
+        markedItem.isBookmarked = !markedItem.isBookmarked;
+      }
+    },
     updateTrending: (state, { payload }) => {
       const markedItem = state.trendingContent.find(
         (item) => item.id === payload
@@ -81,13 +90,18 @@ const contentSlice = createSlice({
     // GET ALL DATA
     builder.addCase(getContent.fulfilled, (state, { payload }) => {
       if (state.allContentData.length <= 0) {
+        // ALL CONTENT DATA
         state.allContentData = payload;
-        const trendingData = payload.filter((item) => item.isTrending);
-        state.trendingContent = trendingData;
-        const movies = payload.filter((item) => item.category === "Movie");
-        const tv = payload.filter((item) => item.category === "TV Series");
-        state.moviesData = movies;
-        state.tvSeriesData = tv;
+        // TRENDING DATA
+        state.trendingContent = payload.filter((item) => item.isTrending);
+        // RECOMMENDED DATA
+        state.recommendedData = payload.filter((item) => !item.isTrending);
+        // MOVIES DATA
+        state.moviesData = payload.filter((item) => item.category === "Movie");
+        // TV SERIES
+        state.tvSeriesData = payload.filter(
+          (item) => item.category === "TV Series"
+        );
         state.isLoading = false;
       }
       state.isLoading = false;
@@ -109,6 +123,7 @@ export const {
   updateTvSeries,
   renderCurrentBookmarks,
   searchQuery,
+  updateRecommended,
 } = contentSlice.actions;
 
 export default contentSlice.reducer;

@@ -27,7 +27,9 @@ const TvSeries = () => {
             <Content name={"TV Series"} contentData={tvSeriesData} />
           ) : (
             <Content
-              name={`Found ${searchQueryArray.length} results for "${searchQueryAndLocation.query}"`}
+              name={`Found ${searchQueryArray.length} result${
+                searchQueryArray.length === 1 ? "" : "s"
+              } for "${searchQueryAndLocation.query}"`}
               contentData={searchQueryArray}
             />
           )}

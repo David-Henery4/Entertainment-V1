@@ -80,7 +80,9 @@ const Bookmarked = () => {
               )}
               {bookmarkedContent.length >= 1 && (
                 <Content
-                  name={`Found ${searchQueryArray.length} results for "${searchQueryAndLocation.query}"`}
+                  name={`Found ${searchQueryArray.length} result${
+                    searchQueryArray.length === 1 ? "" : "s"
+                  } for "${searchQueryAndLocation.query}"`}
                   contentData={searchQueryArray}
                 />
               )}
