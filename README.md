@@ -35,8 +35,8 @@ Users should be able to:
 
 LINKS TO BE ADDED!
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [Fontend Mentor Solution Page](https://www.frontendmentor.io/solutions/entertainment-web-app-74jjvxiPcP)
+- Live Site URL: [Thats Entertainment](https://thats-entertainment-v1.netlify.app)
 
 ## My process
 
